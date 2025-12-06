@@ -1,6 +1,5 @@
 package cpu
 
-import fr.ancyrweb.gameboyemulator.cpu.CPU
 import kotlin.test.Test
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
@@ -92,6 +91,39 @@ class AddR8Tests {
       cpu.addA("B")
 
       Assertions.assertFalse(cpu.getFlag().isHalfCarry())
+    }
+  }
+
+  @Nested
+  inner class CarryFlagTests {
+    @Test
+    fun `cleared when result is less than or equal to 255`() {
+      val cpu = CpuFactory.createCpu()
+      cpu.load("A", 0x01u)
+      cpu.load("B", 0x01u)
+      cpu.addA("B")
+
+      Assertions.assertFalse(cpu.getFlag().isCarry())
+    }
+
+    @Test
+    fun `cleared when result is exactly 255`() {
+      val cpu = CpuFactory.createCpu()
+      cpu.load("A", 0xFEu)
+      cpu.load("B", 0x01u)
+      cpu.addA("B")
+
+      Assertions.assertFalse(cpu.getFlag().isCarry())
+    }
+
+    @Test
+    fun `set when result exceeds 255`() {
+      val cpu = CpuFactory.createCpu()
+      cpu.load("A", 0xFFu)
+      cpu.load("B", 0x01u)
+      cpu.addA("B")
+
+      Assertions.assertTrue(cpu.getFlag().isCarry())
     }
   }
 

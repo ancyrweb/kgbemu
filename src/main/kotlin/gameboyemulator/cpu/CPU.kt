@@ -52,6 +52,12 @@ class CPU {
     if (lowNibbleSum > 0x0F) {
       flag.setHalfCarry()
     }
+
+    // Check Carry Flag
+    // Carry is set when result exceeds 255 (8-bit overflow)
+    if (result > 0xFFu) {
+      flag.setCarry()
+    }
   }
 
   fun getFlag(): FlagRegister {

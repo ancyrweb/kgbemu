@@ -28,4 +28,32 @@ class CPU {
     val register = registers[string] ?: throw IllegalArgumentException("Unknown register")
     return register.read()
   }
+
+  fun addA(src: String) {
+    flag.clear()
+
+    val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
+    val aRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
+
+    val aValue = aRegister.read()
+    val srcValue = srcRegister.read()
+    val result = aValue + srcValue
+
+    aRegister.write(result.toUByte())
+
+    // Check Zero Flag
+    if (result.toUByte() == 0u.toUByte()) {
+      flag.setZero()
+    }
+
+    // Check Half Carry
+    // Half carry is set when there's a carry from bit 3 (overflow from lower nibble)
+    if (((aValue.toInt() and 0x0F) + (srcValue.toInt() and 0x0F)) > 0x0F) {
+      flag.setHalfCarry()
+    }
+  }
+
+  fun getFlag(): FlagRegister {
+    return flag
+  }
 }

@@ -27,7 +27,7 @@ class LoadTests {
   inner class RegisterTests {
     @Test
     fun `load from a register`() {
-      val cpu = CPU()
+      val cpu = CpuFactory.createCpu()
       cpu.load("A", 100u)
       cpu.load("B", "A")
 
@@ -36,7 +36,7 @@ class LoadTests {
 
     @Test
     fun `fails when source register is unknown`() {
-      val cpu = CPU()
+      val cpu = CpuFactory.createCpu()
       Assertions.assertThrows(IllegalArgumentException::class.java) {
         cpu.load("not a register", "B")
       }
@@ -44,7 +44,7 @@ class LoadTests {
 
     @Test
     fun `fails when destination register is unknown`() {
-      val cpu = CPU()
+      val cpu = CpuFactory.createCpu()
       Assertions.assertThrows(IllegalArgumentException::class.java) {
         cpu.load("B", "not a register")
       }

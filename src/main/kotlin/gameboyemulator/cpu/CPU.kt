@@ -48,7 +48,8 @@ class CPU {
 
     // Check Half Carry
     // Half carry is set when there's a carry from bit 3 (overflow from lower nibble)
-    if (((aValue.toInt() and 0x0F) + (srcValue.toInt() and 0x0F)) > 0x0F) {
+    val lowNibbleSum = (aValue.toInt() and 0x0F) + (srcValue.toInt() and 0x0F)
+    if (lowNibbleSum > 0x0F) {
       flag.setHalfCarry()
     }
   }

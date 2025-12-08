@@ -30,19 +30,22 @@ class CPU {
   }
 
   fun addA(src: String) {
+    val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
+    addA(srcRegister.read())
+  }
+
+  fun addA(value: UByte) {
     flag.clear()
 
-    val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
     val destRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
 
     val destValue = destRegister.read()
-    val srcValue = srcRegister.read()
-    val result = destValue + srcValue
+    val result = destValue + value
 
     destRegister.write(result.toUByte())
 
     checkFlags(
-      srcValue,
+      value,
       destValue,
       result
     )

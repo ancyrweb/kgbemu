@@ -22,12 +22,20 @@ class FlagRegister {
     value = (value.toInt() or 0b10000000).toUByte()
   }
 
+  fun clearZero() {
+    value = (value.toInt() and 0b01111111).toUByte()
+  }
+
   fun isSubtract(): Boolean {
     return (value.toInt() and 0b01000000) != 0
   }
 
   fun setSubtract() {
     value = (value.toInt() or 0b01000000).toUByte()
+  }
+
+  fun clearSubtract() {
+    value = (value.toInt() and 0b10111111).toUByte()
   }
 
   fun isHalfCarry(): Boolean {
@@ -38,11 +46,19 @@ class FlagRegister {
     value = (value.toInt() or 0b00100000).toUByte()
   }
 
+  fun clearHalfCarry() {
+    value = (value.toInt() and 0b11011111).toUByte()
+  }
+
   fun isCarry(): Boolean {
     return (value.toInt() and 0b00010000) != 0
   }
 
   fun setCarry() {
     value = (value.toInt() or 0b00010000).toUByte()
+  }
+
+  fun clearCarry() {
+    value = (value.toInt() and 0b11101111).toUByte()
   }
 }

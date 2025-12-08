@@ -33,34 +33,71 @@ class CPU {
     flag.clear()
 
     val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
-    val aRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
+    val destRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
 
-    val aValue = aRegister.read()
+    val destValue = destRegister.read()
     val srcValue = srcRegister.read()
-    val result = aValue + srcValue
+    val result = destValue + srcValue
 
-    aRegister.write(result.toUByte())
+    destRegister.write(result.toUByte())
 
+    checkFlags(
+      srcValue,
+      destValue,
+      result
+    )
+  }
+
+  fun addCarryA(src: String) {
+    val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
+    val destRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
+
+    val destValue = destRegister.read()
+    val srcValue = srcRegister.read()
+    val result = destValue + srcValue + if (flag.isCarry()) 1u else 0u
+
+    destRegister.write(result.toUByte())
+
+    checkFlags(
+      srcValue,
+      destValue,
+      result
+    )
+  }
+
+  fun getFlag(): FlagRegister {
+    return flag
+  }
+
+  private fun checkFlags(
+    srcValue: UByte,
+    destValue: UByte,
+    result: UInt
+  ) {
     // Check Zero Flag
     if (result.toUByte() == 0u.toUByte()) {
       flag.setZero()
+    } else {
+      flag.clearZero()
     }
+
+    flag.clearSubtract()
 
     // Check Half Carry
     // Half carry is set when there's a carry from bit 3 (overflow from lower nibble)
-    val lowNibbleSum = (aValue.toInt() and 0x0F) + (srcValue.toInt() and 0x0F)
+    val lowNibbleSum = (destValue.toInt() and 0x0F) + (srcValue.toInt() and 0x0F)
     if (lowNibbleSum > 0x0F) {
       flag.setHalfCarry()
+    } else {
+      flag.clearHalfCarry()
     }
 
     // Check Carry Flag
     // Carry is set when result exceeds 255 (8-bit overflow)
     if (result > 0xFFu) {
       flag.setCarry()
+    } else {
+      flag.clearCarry()
     }
-  }
-
-  fun getFlag(): FlagRegister {
-    return flag
   }
 }

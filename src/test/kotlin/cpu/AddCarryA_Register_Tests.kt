@@ -4,17 +4,30 @@ import kotlin.test.Test
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 
-class AddR8Tests {
+class AddCarryA_Register_Tests {
   @Nested
   inner class FunctionalTests {
     @Test
-    fun `should add the value of B into A`() {
+    fun `should not add anything when the carry flag is cleared`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
       cpu.load("B", 100u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertEquals(100u.toUByte(), cpu.read("A"))
+    }
+
+    @Test
+    fun `should add 1 when the carry flag is set`() {
+      val cpu = CpuTestHelper.createCpu()
+      cpu.load("A", 255u)
+      cpu.load("B", 1u)
+      cpu.addA("B")
+
+      cpu.load("B", 1u) // Reload B to 1
+      cpu.addCarryA("B")
+
+      Assertions.assertEquals(2u.toUByte(), cpu.read("A"))
     }
   }
 
@@ -25,7 +38,7 @@ class AddR8Tests {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
       cpu.load("B", 0u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertTrue(cpu.getFlag().isZero())
     }
@@ -35,7 +48,7 @@ class AddR8Tests {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
       cpu.load("B", 1u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isZero())
     }
@@ -45,13 +58,13 @@ class AddR8Tests {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
       cpu.load("B", 0u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       // At this point, the zero flag is set.
       // We want to make sure it gets cleared again.
 
       cpu.load("B", 1u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isZero())
     }
@@ -66,7 +79,7 @@ class AddR8Tests {
 
       cpu.load("A", 0u)
       cpu.load("B", 1u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isSubtract())
     }
@@ -79,7 +92,7 @@ class AddR8Tests {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0x0Fu)
       cpu.load("B", 0x01u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertTrue(cpu.getFlag().isHalfCarry())
     }
@@ -87,11 +100,11 @@ class AddR8Tests {
     @Test
     fun `cleared when lower nibble does not overflow`() {
       val cpu = CpuTestHelper.createCpu()
-      CpuTestHelper.setHalfCarryFlag(cpu);
+      CpuTestHelper.setHalfCarryFlag(cpu)
 
       cpu.load("A", 0x01u)
       cpu.load("B", 0x01u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isHalfCarry())
     }
@@ -99,11 +112,11 @@ class AddR8Tests {
     @Test
     fun `cleared when lower nibble sum is less than 16`() {
       val cpu = CpuTestHelper.createCpu()
-      CpuTestHelper.setHalfCarryFlag(cpu);
+      CpuTestHelper.setHalfCarryFlag(cpu)
 
       cpu.load("A", 0x10u)
       cpu.load("B", 0x20u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isHalfCarry())
     }
@@ -114,9 +127,10 @@ class AddR8Tests {
     @Test
     fun `cleared when result is less than or equal to 255`() {
       val cpu = CpuTestHelper.createCpu()
+
       cpu.load("A", 0x01u)
       cpu.load("B", 0x01u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isCarry())
     }
@@ -126,9 +140,9 @@ class AddR8Tests {
       val cpu = CpuTestHelper.createCpu()
       CpuTestHelper.setCarryFlag(cpu)
 
-      cpu.load("A", 0xFEu)
+      cpu.load("A", 0xFDu)
       cpu.load("B", 0x01u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertFalse(cpu.getFlag().isCarry())
     }
@@ -140,7 +154,7 @@ class AddR8Tests {
 
       cpu.load("A", 0xFFu)
       cpu.load("B", 0x01u)
-      cpu.addA("B")
+      cpu.addCarryA("B")
 
       Assertions.assertTrue(cpu.getFlag().isCarry())
     }
@@ -152,7 +166,7 @@ class AddR8Tests {
     fun `fails when source register is unknown`() {
       val cpu = CpuTestHelper.createCpu()
       Assertions.assertThrows(IllegalArgumentException::class.java) {
-        cpu.addA("not a register")
+        cpu.addCarryA("not a register")
       }
     }
   }

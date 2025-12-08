@@ -50,20 +50,24 @@ class CPU {
 
   fun addCarryA(src: String) {
     val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
+    addCarryA(srcRegister.read())
+  }
+
+  fun addCarryA(value: UByte) {
     val destRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
 
     val destValue = destRegister.read()
-    val srcValue = srcRegister.read()
-    val result = destValue + srcValue + if (flag.isCarry()) 1u else 0u
+    val result = destValue + value + if (flag.isCarry()) 1u else 0u
 
     destRegister.write(result.toUByte())
 
     checkFlags(
-      srcValue,
+      value,
       destValue,
       result
     )
   }
+
 
   fun getFlag(): FlagRegister {
     return flag

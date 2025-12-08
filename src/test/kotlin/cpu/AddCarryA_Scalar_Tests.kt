@@ -4,15 +4,14 @@ import kotlin.test.Test
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 
-class AddCarryATests {
+class AddCarryA_Scalar_Tests {
   @Nested
   inner class FunctionalTests {
     @Test
     fun `should not add anything when the carry flag is cleared`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
-      cpu.load("B", 100u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(100u)
 
       Assertions.assertEquals(100u.toUByte(), cpu.read("A"))
     }
@@ -20,12 +19,9 @@ class AddCarryATests {
     @Test
     fun `should add 1 when the carry flag is set`() {
       val cpu = CpuTestHelper.createCpu()
-      cpu.load("A", 255u)
-      cpu.load("B", 1u)
-      cpu.addA("B")
+      CpuTestHelper.setCarryFlag(cpu)
 
-      cpu.load("B", 1u) // Reload B to 1
-      cpu.addCarryA("B")
+      cpu.addCarryA(1u)
 
       Assertions.assertEquals(2u.toUByte(), cpu.read("A"))
     }
@@ -37,8 +33,7 @@ class AddCarryATests {
     fun `set when result is zero`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
-      cpu.load("B", 0u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0u)
 
       Assertions.assertTrue(cpu.getFlag().isZero())
     }
@@ -47,8 +42,7 @@ class AddCarryATests {
     fun `cleared when result is not zero`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
-      cpu.load("B", 1u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(1u)
 
       Assertions.assertFalse(cpu.getFlag().isZero())
     }
@@ -57,14 +51,12 @@ class AddCarryATests {
     fun `cleared when new result is not zero`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0u)
-      cpu.load("B", 0u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0u)
 
       // At this point, the zero flag is set.
       // We want to make sure it gets cleared again.
 
-      cpu.load("B", 1u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(1u)
 
       Assertions.assertFalse(cpu.getFlag().isZero())
     }
@@ -78,8 +70,7 @@ class AddCarryATests {
       CpuTestHelper.setSubtractFlag(cpu)
 
       cpu.load("A", 0u)
-      cpu.load("B", 1u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(1u)
 
       Assertions.assertFalse(cpu.getFlag().isSubtract())
     }
@@ -91,8 +82,7 @@ class AddCarryATests {
     fun `set when lower nibble overflow (over 16)`() {
       val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 0x0Fu)
-      cpu.load("B", 0x01u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x01u)
 
       Assertions.assertTrue(cpu.getFlag().isHalfCarry())
     }
@@ -103,8 +93,7 @@ class AddCarryATests {
       CpuTestHelper.setHalfCarryFlag(cpu)
 
       cpu.load("A", 0x01u)
-      cpu.load("B", 0x01u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x01u)
 
       Assertions.assertFalse(cpu.getFlag().isHalfCarry())
     }
@@ -115,8 +104,7 @@ class AddCarryATests {
       CpuTestHelper.setHalfCarryFlag(cpu)
 
       cpu.load("A", 0x10u)
-      cpu.load("B", 0x20u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x20u)
 
       Assertions.assertFalse(cpu.getFlag().isHalfCarry())
     }
@@ -129,8 +117,7 @@ class AddCarryATests {
       val cpu = CpuTestHelper.createCpu()
 
       cpu.load("A", 0x01u)
-      cpu.load("B", 0x01u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x01u)
 
       Assertions.assertFalse(cpu.getFlag().isCarry())
     }
@@ -141,8 +128,7 @@ class AddCarryATests {
       CpuTestHelper.setCarryFlag(cpu)
 
       cpu.load("A", 0xFDu)
-      cpu.load("B", 0x01u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x01u)
 
       Assertions.assertFalse(cpu.getFlag().isCarry())
     }
@@ -153,21 +139,9 @@ class AddCarryATests {
       CpuTestHelper.setCarryFlag(cpu)
 
       cpu.load("A", 0xFFu)
-      cpu.load("B", 0x01u)
-      cpu.addCarryA("B")
+      cpu.addCarryA(0x01u)
 
       Assertions.assertTrue(cpu.getFlag().isCarry())
-    }
-  }
-
-  @Nested
-  inner class ErrorTests {
-    @Test
-    fun `fails when source register is unknown`() {
-      val cpu = CpuTestHelper.createCpu()
-      Assertions.assertThrows(IllegalArgumentException::class.java) {
-        cpu.addCarryA("not a register")
-      }
     }
   }
 }

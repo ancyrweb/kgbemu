@@ -48,15 +48,11 @@ class CPU (val mmu: MMU) {
     addA(srcRegister.read())
   }
 
+  /**
+   * Add the value pointed to by HL to register A
+   */
   fun addAFromHL() {
-    val hr = registers["H"] ?: throw IllegalArgumentException("Unknown register")
-    val lr = registers["L"] ?: throw IllegalArgumentException("Unknown register")
-    val h = hr.read()
-    val l = lr.read()
-
-    val addr = (h.toUInt() shl 8) or l.toUInt()
-    val value = mmu.readByte(addr.toInt())
-    addA(value)
+    addA(mmu.readByte(computeHLAddress()))
   }
 
   /**
@@ -138,5 +134,15 @@ class CPU (val mmu: MMU) {
 
   fun getMMU(): MMU {
     return mmu
+  }
+
+  private fun computeHLAddress() : Int {
+    val hr = registers["H"] ?: throw IllegalArgumentException("Unknown register")
+    val lr = registers["L"] ?: throw IllegalArgumentException("Unknown register")
+    val h = hr.read()
+    val l = lr.read()
+
+    val addr = (h.toUInt() shl 8) or l.toUInt()
+    return addr.toInt()
   }
 }

@@ -20,9 +20,7 @@ class AddCarryA_Register_Tests {
     @Test
     fun `should add 1 when the carry flag is set`() {
       val cpu = CpuTestHelper.createCpu()
-      cpu.load("A", 255u)
-      cpu.load("B", 1u)
-      cpu.addA("B")
+      CpuTestHelper.setCarryFlag(cpu)
 
       cpu.load("B", 1u) // Reload B to 1
       cpu.addCarryA("B")

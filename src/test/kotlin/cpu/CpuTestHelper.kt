@@ -24,5 +24,10 @@ class CpuTestHelper {
     fun setZeroFlag(cpu: CPU) {
       cpu.getFlag().setZero()
     }
+
+    fun loadHL(cpu: CPU, address: Int) {
+      cpu.load("H", ((address shr 8) and 0xFF).toUByte())
+      cpu.load("L", (address and 0xFF).toUByte())
+    }
   }
 }

@@ -75,11 +75,21 @@ class CPU (val mmu: MMU) {
     )
   }
 
+  /**
+   * Add the value of the src register and the carry flag to register A
+   */
   fun addCarryA(src: String) {
     val srcRegister = registers[src] ?: throw IllegalArgumentException("Unknown register")
     addCarryA(srcRegister.read())
   }
 
+  fun addCarryAFromHL() {
+    addCarryA(mmu.readByte(computeHLAddress()))
+  }
+
+  /**
+   * Add an immediate value and the carry flag to register A
+   */
   fun addCarryA(value: UByte) {
     val destRegister = registers["A"] ?: throw IllegalArgumentException("Unknown register")
 

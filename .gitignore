@@ -43,3 +43,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+src/main/resources/pokemonred.gb
+src/main/resources/tetris.gb

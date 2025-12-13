@@ -1,6 +1,5 @@
 package cpu
 
-import fr.ancyrweb.gameboyemulator.cpu.CPU
 import kotlin.test.Test
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
@@ -10,7 +9,7 @@ class LoadTests {
   inner class NumberTests {
     @Test
     fun `load from a number`() {
-      val cpu = CPU()
+      val cpu = CpuTestHelper.createCpu()
       cpu.load("A", 100u)
 
       Assertions.assertEquals(100u.toUByte(), cpu.read("A"))
@@ -18,7 +17,7 @@ class LoadTests {
 
     @Test
     fun `fails when register is unknown`() {
-      val cpu = CPU()
+      val cpu = CpuTestHelper.createCpu()
       Assertions.assertThrows(IllegalArgumentException::class.java) { cpu.load("not a register", 100u) }
     }
   }

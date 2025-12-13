@@ -1,11 +1,12 @@
 package cpu
 
 import fr.ancyrweb.gameboyemulator.cpu.CPU
+import fr.ancyrweb.gameboyemulator.ram.MMU
 
 class CpuTestHelper {
   companion object {
     fun createCpu(): CPU {
-      return CPU()
+      return CPU(MMU())
     }
 
     fun setSubtractFlag(cpu: CPU) {

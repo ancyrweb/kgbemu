@@ -1,4 +1,4 @@
-package fr.ancyrweb
+package fr.ancyrweb.gameboyemulator.tooling
 
 import fr.ancyrweb.gameboyemulator.output.ConsoleOutputSource
 import fr.ancyrweb.gameboyemulator.output.OutputSource
@@ -9,8 +9,8 @@ import java.io.File
  * through the OutputSource abstraction.
  */
 class BinaryDumper(
-    private val file: File,
-    private val outputSource: OutputSource = ConsoleOutputSource(),
+  private val file: File,
+  private val outputSource: OutputSource = ConsoleOutputSource(),
 ) {
   fun dump() {
     if (!file.exists()) {

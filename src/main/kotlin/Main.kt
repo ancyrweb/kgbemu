@@ -3,7 +3,7 @@ package fr.ancyrweb
 import java.io.File
 
 fun main() {
-  ROMDumper(
+  BinaryDumper(
     file = File("src/main/resources/tetris.gb")
   ).dump()
 }

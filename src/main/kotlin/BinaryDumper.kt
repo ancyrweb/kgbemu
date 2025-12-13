@@ -8,7 +8,7 @@ import java.io.File
  * Dumps the contents of a ROM file in hexadecimal format. Supports various output destinations
  * through the OutputSource abstraction.
  */
-class ROMDumper(
+class BinaryDumper(
     private val file: File,
     private val outputSource: OutputSource = ConsoleOutputSource(),
 ) {

@@ -1,10 +1,6 @@
 package fr.ancyrweb.gameboyemulator.tooling
 
-import fr.ancyrweb.gameboyemulator.assembly.CallOpcode
-import fr.ancyrweb.gameboyemulator.assembly.JumpOpcode
-import fr.ancyrweb.gameboyemulator.assembly.NopOpcode
 import fr.ancyrweb.gameboyemulator.assembly.Opcode
-import fr.ancyrweb.gameboyemulator.assembly.UnknownOpcode
 import fr.ancyrweb.gameboyemulator.output.ConsoleOutputSource
 import fr.ancyrweb.gameboyemulator.output.OutputSource
 import java.io.File
@@ -31,20 +27,16 @@ class Disassembler(
     opcodes.clear()
 
     // Scan the entry point section (0x0100 to 0x0103)
-    var i = 0x0100
-    while (i < 0x0104) {
-      val opcode = getOpcodeAt(bytes, i)
-      opcodes.add(opcode)
-      i += opcode.toByteSize()
-    }
+    val entryPointBytes = bytes.copyOfRange(0x0100, 0x0104)
+    val entryPointScanner = OpcodeScanner(entryPointBytes)
+    entryPointScanner.scan()
+    opcodes.addAll(entryPointScanner.all())
 
     // Scan the code section (0x0150 to end)
-    i = 0x0150
-    while (i < bytes.size) {
-      val opcode = getOpcodeAt(bytes, i)
-      opcodes.add(opcode)
-      i += opcode.toByteSize()
-    }
+    val codeBytes = bytes.copyOfRange(0x0150, bytes.size)
+    val codeScanner = OpcodeScanner(codeBytes)
+    codeScanner.scan()
+    opcodes.addAll(codeScanner.all())
   }
 
   fun dump(outputSource: OutputSource = ConsoleOutputSource()) {
@@ -55,25 +47,5 @@ class Disassembler(
     }
 
     outputSource.flush()
-  }
-
-  private fun getOpcodeAt(bytes: ByteArray, index: Int): Opcode {
-    return when (bytes[index].toInt() and 0xFF) {
-      0x00 -> {
-        NopOpcode.fromBytes(bytes, index)
-      }
-
-      0xC3 -> {
-        JumpOpcode.fromBytes(bytes, index)
-      }
-
-      0xCD -> {
-        CallOpcode.fromBytes(bytes, index)
-      }
-
-      else -> {
-        UnknownOpcode.fromBytes(bytes, index)
-      }
-    }
   }
 }

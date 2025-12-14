@@ -1,6 +1,6 @@
 package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
-class CallOpcode(opCodeAddress: Int, val address: Int) : Opcode("CALL", opCodeAddress, 3) {
+class CallOpcode(opCodeAddress: Int, private val address: Int) : Opcode("CALL", opCodeAddress, 3) {
   companion object {
     fun fromBytes(bytes: ByteArray, index: Int, address: Int): CallOpcode {
       val low = bytes[index + 1].toInt() and 0xFF
@@ -12,5 +12,9 @@ class CallOpcode(opCodeAddress: Int, val address: Int) : Opcode("CALL", opCodeAd
 
   override fun disassemblySuffix(): String {
     return "0x${address.toString(16).uppercase().padStart(4, '0')}"
+  }
+
+  fun getAddress(): Int {
+    return address
   }
 }

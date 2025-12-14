@@ -1,6 +1,7 @@
 package fr.ancyrweb.gameboyemulator.assembly
 
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.CallOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.HaltOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.IllegalOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.JumpOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.NopOpcode
@@ -57,6 +58,10 @@ class OpcodeScanner(
     return when (opcodeByte) {
       0x00 -> {
         NopOpcode.fromBytes(address)
+      }
+
+      0x76 -> {
+        HaltOpcode.fromBytes(address)
       }
 
       0xC3 -> {

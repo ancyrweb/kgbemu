@@ -30,17 +30,20 @@ class Disassembler(
 
     opcodes.clear()
 
+    // Scan the entry point section (0x0100 to 0x0103)
     var i = 0x0100
+    while (i < 0x0104) {
+      val opcode = getOpcodeAt(bytes, i)
+      opcodes.add(opcode)
+      i += opcode.toByteSize()
+    }
+
+    // Scan the code section (0x0150 to end)
+    i = 0x0150
     while (i < bytes.size) {
       val opcode = getOpcodeAt(bytes, i)
       opcodes.add(opcode)
       i += opcode.toByteSize()
-
-      // Only the entry point is disassembled for now
-      // Then we jump straight to the beginning of the code section
-      if (i == 0x0104) {
-        i = 0x0150
-      }
     }
   }
 

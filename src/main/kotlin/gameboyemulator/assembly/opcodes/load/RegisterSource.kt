@@ -7,4 +7,8 @@ class RegisterSource (private val name: String): LoadSource() {
   override fun getName(): String {
     return name
   }
+
+  fun getRegisterName(): String {
+    return name
+  }
 }

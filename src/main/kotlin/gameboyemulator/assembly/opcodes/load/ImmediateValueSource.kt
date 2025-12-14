@@ -16,4 +16,12 @@ class ImmediateValueSource (private val value: Int, private val size: Size) : Lo
       Size.WORD -> String.format("#$%04X", value and 0xFFFF)
     }
   }
+
+  fun getValue(): Int {
+    return value
+  }
+
+  fun getSize(): Size {
+    return size
+  }
 }

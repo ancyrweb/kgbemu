@@ -7,6 +7,7 @@ import fr.ancyrweb.gameboyemulator.assembly.opcodes.JumpOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.NopOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.Opcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.UnknownOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.LoadOpcode
 
 /**
  * Scans a byte array and converts it to a list of opcodes. The scanner parses the entire byte array
@@ -55,25 +56,16 @@ class OpcodeScanner(
       return IllegalOpcode.fromBytes(bytes, index, address)
     }
 
+    // Try specific opcodes first
     return when (opcodeByte) {
-      0x00 -> {
-        NopOpcode.fromBytes(address)
-      }
-
-      0x76 -> {
-        HaltOpcode.fromBytes(address)
-      }
-
-      0xC3 -> {
-        JumpOpcode.fromBytes(bytes, index, address)
-      }
-
-      0xCD -> {
-        CallOpcode.fromBytes(bytes, index, address)
-      }
-
+      0x00 -> NopOpcode.fromBytes(address)
+      0x76 -> HaltOpcode.fromBytes(address)
+      0xC3 -> JumpOpcode.fromBytes(bytes, index, address)
+      0xCD -> CallOpcode.fromBytes(bytes, index, address)
       else -> {
-        UnknownOpcode.fromBytes(bytes, index, address)
+        // Try load opcodes
+        LoadOpcode.fromBytes(bytes, index, address)
+          ?: UnknownOpcode.fromBytes(bytes, index, address)
       }
     }
   }

@@ -2,11 +2,11 @@ package fr.ancyrweb.gameboyemulator.assembly
 
 class JumpOpcode(opCodeAddress: Int, val address: Int) : Opcode("JUMP", opCodeAddress, 3) {
   companion object {
-    fun fromBytes(bytes: ByteArray, index: Int): JumpOpcode {
+    fun fromBytes(bytes: ByteArray, index: Int, address: Int): JumpOpcode {
       val low = bytes[index + 1].toInt() and 0xFF
       val high = bytes[index + 2].toInt() and 0xFF
-      val address = (high shl 8) or low
-      return JumpOpcode(index, address)
+      val jumpAddress = (high shl 8) or low
+      return JumpOpcode(address, jumpAddress)
     }
   }
 

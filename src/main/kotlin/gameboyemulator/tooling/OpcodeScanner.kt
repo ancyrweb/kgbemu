@@ -9,9 +9,13 @@ import fr.ancyrweb.gameboyemulator.assembly.UnknownOpcode
 /**
  * Scans a byte array and converts it to a list of opcodes.
  * The scanner parses the entire byte array from start to finish.
+ *
+ * @param bytes The byte array to scan
+ * @param startAddress The memory address where the byte array starts (default: 0)
  */
 class OpcodeScanner(
     private val bytes: ByteArray,
+    private val startAddress: Int = 0,
 ) {
 
   private val opcodes: MutableList<Opcode> = mutableListOf()
@@ -25,7 +29,7 @@ class OpcodeScanner(
 
     var i = 0
     while (i < bytes.size) {
-      val opcode = getOpcodeAt(bytes, i)
+      val opcode = getOpcodeAt(bytes, i, startAddress + i)
       opcodes.add(opcode)
       i += opcode.toByteSize()
     }
@@ -38,22 +42,22 @@ class OpcodeScanner(
     return opcodes.toList()
   }
 
-  private fun getOpcodeAt(bytes: ByteArray, index: Int): Opcode {
+  private fun getOpcodeAt(bytes: ByteArray, index: Int, address: Int): Opcode {
     return when (bytes[index].toInt() and 0xFF) {
       0x00 -> {
-        NopOpcode.fromBytes(bytes, index)
+        NopOpcode.fromBytes(address)
       }
 
       0xC3 -> {
-        JumpOpcode.fromBytes(bytes, index)
+        JumpOpcode.fromBytes(bytes, index, address)
       }
 
       0xCD -> {
-        CallOpcode.fromBytes(bytes, index)
+        CallOpcode.fromBytes(bytes, index, address)
       }
 
       else -> {
-        UnknownOpcode.fromBytes(bytes, index)
+        UnknownOpcode.fromBytes(bytes, index, address)
       }
     }
   }

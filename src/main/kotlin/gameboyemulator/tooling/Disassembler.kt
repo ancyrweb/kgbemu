@@ -28,13 +28,13 @@ class Disassembler(
 
     // Scan the entry point section (0x0100 to 0x0103)
     val entryPointBytes = bytes.copyOfRange(0x0100, 0x0104)
-    val entryPointScanner = OpcodeScanner(entryPointBytes)
+    val entryPointScanner = OpcodeScanner(entryPointBytes, startAddress = 0x0100)
     entryPointScanner.scan()
     opcodes.addAll(entryPointScanner.all())
 
     // Scan the code section (0x0150 to end)
     val codeBytes = bytes.copyOfRange(0x0150, bytes.size)
-    val codeScanner = OpcodeScanner(codeBytes)
+    val codeScanner = OpcodeScanner(codeBytes, startAddress = 0x0150)
     codeScanner.scan()
     opcodes.addAll(codeScanner.all())
   }

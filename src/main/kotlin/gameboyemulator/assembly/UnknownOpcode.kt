@@ -12,8 +12,8 @@ class UnknownOpcode(opCodeAddress: Int, byteValue: UByte) :
         1,
     ) {
   companion object {
-    fun fromBytes(bytes: ByteArray, index: Int): UnknownOpcode {
-      return UnknownOpcode(index, bytes[index].toUByte())
+    fun fromBytes(bytes: ByteArray, index: Int, address: Int): UnknownOpcode {
+      return UnknownOpcode(address, bytes[index].toUByte())
     }
   }
 }

@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.tooling
+package fr.ancyrweb.gameboyemulator.assembly
 
 import fr.ancyrweb.gameboyemulator.output.ConsoleOutputSource
 import fr.ancyrweb.gameboyemulator.output.OutputSource

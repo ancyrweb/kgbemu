@@ -1,14 +1,15 @@
 package fr.ancyrweb.gameboyemulator.assembly
 
-class UnknownOpcode(opCodeAddress: Int, byteValue: UByte) :
-    Opcode(
-        "??? (${OpcodeUtils.formatOpcodeByte(byteValue)})",
-        opCodeAddress,
-        1,
-    ) {
+class IllegalOpcode(opCodeAddress: Int, byteValue: UByte) :
+  Opcode(
+    "Illegal (${OpcodeUtils.formatOpcodeByte(byteValue)})",
+    opCodeAddress,
+    1,
+  ) {
   companion object {
     fun fromBytes(bytes: ByteArray, index: Int, address: Int): UnknownOpcode {
       return UnknownOpcode(address, bytes[index].toUByte())
     }
   }
 }
+

@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 class NopOpcode(opCodeAddress: Int) : Opcode("NOP", opCodeAddress, 1) {
   companion object {

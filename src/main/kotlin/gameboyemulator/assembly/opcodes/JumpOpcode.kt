@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 class JumpOpcode(opCodeAddress: Int, val address: Int) : Opcode("JUMP", opCodeAddress, 3) {
   companion object {

@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 object OpcodeUtils {
   fun formatOpcodeByte(byteValue: UByte): String {

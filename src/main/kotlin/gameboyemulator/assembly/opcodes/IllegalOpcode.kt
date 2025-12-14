@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 class IllegalOpcode(opCodeAddress: Int, byteValue: UByte) :
   Opcode(

@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 class UnknownOpcode(opCodeAddress: Int, byteValue: UByte) :
     Opcode(

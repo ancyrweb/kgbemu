@@ -1,10 +1,10 @@
-package fr.ancyrweb.gameboyemulator.tooling
+package fr.ancyrweb.gameboyemulator.assembly
 
-import fr.ancyrweb.gameboyemulator.assembly.CallOpcode
-import fr.ancyrweb.gameboyemulator.assembly.JumpOpcode
-import fr.ancyrweb.gameboyemulator.assembly.NopOpcode
-import fr.ancyrweb.gameboyemulator.assembly.Opcode
-import fr.ancyrweb.gameboyemulator.assembly.UnknownOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.CallOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.JumpOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.NopOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.Opcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.UnknownOpcode
 
 /**
  * Scans a byte array and converts it to a list of opcodes.

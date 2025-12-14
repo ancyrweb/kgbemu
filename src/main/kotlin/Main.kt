@@ -1,6 +1,6 @@
 package fr.ancyrweb
 
-import fr.ancyrweb.gameboyemulator.tooling.Disassembler
+import fr.ancyrweb.gameboyemulator.assembly.Disassembler
 import java.io.File
 
 fun main() {

@@ -1,6 +1,6 @@
-package fr.ancyrweb.gameboyemulator.tooling
+package fr.ancyrweb.gameboyemulator.assembly
 
-import fr.ancyrweb.gameboyemulator.assembly.Opcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.Opcode
 import fr.ancyrweb.gameboyemulator.output.ConsoleOutputSource
 import fr.ancyrweb.gameboyemulator.output.OutputSource
 import java.io.File

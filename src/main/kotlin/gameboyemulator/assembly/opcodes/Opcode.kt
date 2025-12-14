@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 abstract class Opcode (val name: String, val opCodeAddress: Int, val bytesSize: Int) {
   fun toDisassemblyString(): String {

@@ -1,4 +1,4 @@
-package fr.ancyrweb.gameboyemulator.assembly
+package fr.ancyrweb.gameboyemulator.assembly.opcodes
 
 class CallOpcode(opCodeAddress: Int, val address: Int) : Opcode("CALL", opCodeAddress, 3) {
   companion object {

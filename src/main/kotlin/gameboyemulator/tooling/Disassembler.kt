@@ -33,25 +33,7 @@ class Disassembler(
 
     var i = 0x0100
     while (i < bytes.size) {
-      val opcode: Opcode =
-          when (bytes[i].toInt() and 0xFF) {
-            0x00 -> {
-              NopOpcode.fromBytes(bytes, i)
-            }
-
-            0xC3 -> {
-              JumpOpcode.fromBytes(bytes, i)
-            }
-
-            0xCD -> {
-              CallOpcode.fromBytes(bytes, i)
-            }
-
-            else -> {
-              UnknownOpcode.fromBytes(bytes, i)
-            }
-          }
-
+      val opcode = getOpcodeAt(bytes, i)
       opcodes.add(opcode)
       i += opcode.toByteSize()
 
@@ -69,5 +51,25 @@ class Disassembler(
     }
 
     outputSource.flush()
+  }
+
+  private fun getOpcodeAt(bytes: ByteArray, index: Int): Opcode {
+    return when (bytes[index].toInt() and 0xFF) {
+      0x00 -> {
+        NopOpcode.fromBytes(bytes, index)
+      }
+
+      0xC3 -> {
+        JumpOpcode.fromBytes(bytes, index)
+      }
+
+      0xCD -> {
+        CallOpcode.fromBytes(bytes, index)
+      }
+
+      else -> {
+        UnknownOpcode.fromBytes(bytes, index)
+      }
+    }
   }
 }

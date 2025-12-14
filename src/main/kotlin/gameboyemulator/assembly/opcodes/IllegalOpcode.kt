@@ -4,7 +4,7 @@ class IllegalOpcode(opCodeAddress: Int, byteValue: UByte) :
   Opcode(
     "Illegal (${OpcodeUtils.formatOpcodeByte(byteValue)})",
     opCodeAddress,
-    1,
+    bytesSize = 1,
   ) {
   companion object {
     /**

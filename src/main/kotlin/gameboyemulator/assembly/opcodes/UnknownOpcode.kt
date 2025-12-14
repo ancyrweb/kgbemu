@@ -4,7 +4,6 @@ class UnknownOpcode(opCodeAddress: Int, byteValue: UByte) :
     Opcode(
         "??? (${OpcodeUtils.formatOpcodeByte(byteValue)})",
         opCodeAddress,
-        1,
     ) {
   companion object {
     fun fromBytes(bytes: ByteArray, index: Int, address: Int): UnknownOpcode {

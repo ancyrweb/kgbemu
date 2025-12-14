@@ -10,6 +10,6 @@ fun main() {
 //  ).dump()
 
   Disassembler(
-    bytes = byteArrayOf(0x00, 0xC3.toByte(), 0x50, 0x01),
+    file = File("src/main/resources/tetris.gb")
   ).dump()
 }

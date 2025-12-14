@@ -5,7 +5,7 @@ import java.io.File
 import java.io.FileWriter
 
 /** File output implementation. Writes output to a file on disk. */
-class FileOutputSource(private val file: File) : OutputSource {
+class FileOutputSource(file: File) : OutputSource {
   private val writer: BufferedWriter = BufferedWriter(FileWriter(file))
 
   override fun writeLine(text: String) {
@@ -21,7 +21,7 @@ class FileOutputSource(private val file: File) : OutputSource {
     writer.flush()
   }
 
-  override fun close() {
+  fun close() {
     writer.close()
   }
 }

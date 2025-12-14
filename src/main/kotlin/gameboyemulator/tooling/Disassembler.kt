@@ -11,25 +11,24 @@ import java.io.File
 
 class Disassembler(
     private val file: File,
-    private val outputSource: OutputSource = ConsoleOutputSource(),
 ) {
 
-  fun dump() {
+  private val opcodes: MutableList<Opcode> = mutableListOf()
+
+  fun scan() {
     if (!file.exists()) {
-      outputSource.writeLine("Error: File not found at ${file.absolutePath}")
-      return
+      throw IllegalStateException("File not found at ${file.absolutePath}")
     }
 
     val bytes = file.readBytes()
 
     if (bytes.size < 0x0150) {
-      outputSource.writeLine(
-          "Error: ROM file is too small (${bytes.size} bytes). Expected at least 336 bytes."
+      throw IllegalStateException(
+          "ROM file is too small (${bytes.size} bytes). Expected at least 336 bytes."
       )
-      return
     }
 
-    val opcodes: MutableList<Opcode> = mutableListOf()
+    opcodes.clear()
 
     var i = 0x0100
     while (i < bytes.size) {
@@ -43,7 +42,9 @@ class Disassembler(
         i = 0x0150
       }
     }
+  }
 
+  fun dump(outputSource: OutputSource = ConsoleOutputSource()) {
     outputSource.writeLine("=== Disassembly ===")
     outputSource.writeLine("")
     for (opcode in opcodes) {

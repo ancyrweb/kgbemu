@@ -14,7 +14,5 @@ class ConsoleOutputSource : OutputSource {
     System.out.flush()
   }
 
-  override fun close() {
-    // Nothing to close for console output
-  }
+
 }

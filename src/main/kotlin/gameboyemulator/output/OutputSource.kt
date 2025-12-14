@@ -14,6 +14,5 @@ interface OutputSource {
   /** Flushes any buffered output. */
   fun flush()
 
-  /** Closes the output source and releases resources. */
-  fun close()
+
 }

@@ -8,6 +8,7 @@ import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.IOPortRegisterSource
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.MemoryAddressSource
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.RegisterSource
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.SPOffsetSource
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.sources.SignedByte
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.sources.ImmediateValueSource
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.sources.OperandSource
 
@@ -297,7 +298,7 @@ class LoadOpcode(
 
         // LDHL SP, n - Load SP + signed byte n into HL
         0xF8 -> {
-          val offset = bytes[index + 1].toInt() // Signed byte
+          val offset = SignedByte(bytes[index + 1].toInt())
           LoadOpcode(address,
             RegisterSource("HL"),
             SPOffsetSource(offset), bytesSize = 2, highClockCycle = 12, lowClockCycle = 12)

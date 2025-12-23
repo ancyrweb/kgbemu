@@ -1,10 +1,12 @@
 package fr.ancyrweb.gameboyemulator.assembly.opcodes.load
 
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.sources.OperandSource
+
 /**
  * Represents a load source that is a memory address (16-bit).
  * Can be a register pair (BC, DE) or a direct address.
  */
-class MemoryAddressSource : LoadSource {
+class MemoryAddressSource : OperandSource {
   private val address: String
   private val isRegisterPair: Boolean
   private val directAddress: Int?

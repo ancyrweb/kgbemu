@@ -1,6 +1,8 @@
 package assembly.opcodes
 
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.LoadOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.*
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.sources.ImmediateValueSource
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested

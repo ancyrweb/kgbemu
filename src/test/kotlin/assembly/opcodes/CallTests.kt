@@ -1,8 +1,6 @@
 package assembly.opcodes
 
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.CallOpcode
-import fr.ancyrweb.gameboyemulator.assembly.opcodes.JumpOpcode
-import fr.ancyrweb.gameboyemulator.assembly.opcodes.NopOpcode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

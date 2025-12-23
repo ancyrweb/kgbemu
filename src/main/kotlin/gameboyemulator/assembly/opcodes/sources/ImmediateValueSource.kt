@@ -1,10 +1,10 @@
-package fr.ancyrweb.gameboyemulator.assembly.opcodes.load
+package fr.ancyrweb.gameboyemulator.assembly.opcodes.sources
 
 /**
  * Represents a load source that is an immediate value.
  * Can be a 8-bit or 16-bit immediate value depending on the context.
  */
-class ImmediateValueSource (private val value: Int, private val size: Size) : LoadSource() {
+class ImmediateValueSource (private val value: Int, private val size: Size) : OperandSource() {
   enum class Size {
     BYTE,
     WORD

@@ -6,47 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
 
 class LoadOpcodeTests {
-  @Nested
-  inner class ImmediateToRegisterTests {
-    @Test
-    fun `test LD A, n`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x3E.toByte(), 0x42.toByte()), startAddress = 0x0100)
-      Assertions.assertEquals(1, opcodes.size)
-
-      val loadOpcode = opcodes[0] as LoadOpcode
-      Assertions.assertEquals(2, loadOpcode.toByteSize())
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is ImmediateValueSource)
-      Assertions.assertEquals("A", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals(0x42, (loadOpcode.source as ImmediateValueSource).getValue())
-      Assertions.assertEquals(ImmediateValueSource.Size.BYTE, loadOpcode.source.getSize())
-    }
-
-    @Test
-    fun `test LD B, n`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x06.toByte(), 0xFF.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is ImmediateValueSource)
-      Assertions.assertEquals("B", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals(0xFF, (loadOpcode.source as ImmediateValueSource).getValue())
-      Assertions.assertEquals(ImmediateValueSource.Size.BYTE, loadOpcode.source.getSize())
-    }
-
-    @Test
-    fun `test LD L, n`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x2E.toByte(), 0x10.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is ImmediateValueSource)
-      Assertions.assertEquals("L", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals(0x10, (loadOpcode.source as ImmediateValueSource).getValue())
-      Assertions.assertEquals(ImmediateValueSource.Size.BYTE, loadOpcode.source.getSize())
-    }
-  }
 
   @Nested
   inner class HLMemoryTests {

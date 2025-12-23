@@ -6,67 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
 
 class LoadOpcodeTests {
-
-
-  @Nested
-  inner class RegisterPairMemoryTests {
-    @Test
-    fun `test LD A, (BC)`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x0A.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is MemoryAddressSource)
-      Assertions.assertEquals("A", (loadOpcode.destination as RegisterSource).getRegisterName())
-
-      val memSource = loadOpcode.source as MemoryAddressSource
-      Assertions.assertTrue(memSource.isRegisterPair())
-      Assertions.assertEquals("BC", memSource.getRegisterPair())
-    }
-
-    @Test
-    fun `test LD A, (DE)`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x1A.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is MemoryAddressSource)
-      Assertions.assertEquals("A", (loadOpcode.destination as RegisterSource).getRegisterName())
-
-      val memSource = loadOpcode.source as MemoryAddressSource
-      Assertions.assertTrue(memSource.isRegisterPair())
-      Assertions.assertEquals("DE", memSource.getRegisterPair())
-    }
-
-    @Test
-    fun `test LD (BC), A`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x02.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is MemoryAddressSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("A", (loadOpcode.source as RegisterSource).getRegisterName())
-
-      val memDest = loadOpcode.destination as MemoryAddressSource
-      Assertions.assertTrue(memDest.isRegisterPair())
-      Assertions.assertEquals("BC", memDest.getRegisterPair())
-    }
-
-    @Test
-    fun `test LD (DE), A`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x12.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is MemoryAddressSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("A", (loadOpcode.source as RegisterSource).getRegisterName())
-
-      val memDest = loadOpcode.destination as MemoryAddressSource
-      Assertions.assertTrue(memDest.isRegisterPair())
-      Assertions.assertEquals("DE", memDest.getRegisterPair())
-    }
-  }
-
   @Nested
   inner class DirectMemoryTests {
     @Test

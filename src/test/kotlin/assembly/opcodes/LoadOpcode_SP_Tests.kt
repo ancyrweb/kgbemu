@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class LoadOpcode_SP_Tests {
   @Test
   fun `test LD SP, nn`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x31.toByte(), 0xFE.toByte(), 0xFF.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x31.toByte(), 0xFE.toByte(), 0xFF.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(3, loadOpcode.toByteSize())
@@ -20,7 +20,7 @@ class LoadOpcode_SP_Tests {
 
   @Test
   fun `test LD SP, HL`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF9.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF9.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertTrue(loadOpcode.destination is RegisterSource)
@@ -31,7 +31,7 @@ class LoadOpcode_SP_Tests {
 
   @Test
   fun `test LD (nn), SP`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x08.toByte(), 0x00.toByte(), 0xC0.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x08.toByte(), 0x00.toByte(), 0xC0.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(3, loadOpcode.toByteSize())
@@ -46,7 +46,7 @@ class LoadOpcode_SP_Tests {
 
   @Test
   fun `test LDHL SP, n with positive offset`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF8.toByte(), 0x10.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF8.toByte(), 0x10.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(2, loadOpcode.toByteSize())
@@ -58,7 +58,7 @@ class LoadOpcode_SP_Tests {
 
   @Test
   fun `test LDHL SP, n with negative offset`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF8.toByte(), 0xF0.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0xF8.toByte(), 0xF0.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(2, loadOpcode.toByteSize())

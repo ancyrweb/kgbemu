@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class LoadOpcode_Words_Tests {
   @Test
   fun `test LD BC, nn`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x01.toByte(), 0x34.toByte(), 0x12.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x01.toByte(), 0x34.toByte(), 0x12.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(3, loadOpcode.toByteSize())
@@ -20,7 +20,7 @@ class LoadOpcode_Words_Tests {
 
   @Test
   fun `test LD DE, nn`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x11.toByte(), 0xEF.toByte(), 0xBE.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x11.toByte(), 0xEF.toByte(), 0xBE.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(3, loadOpcode.toByteSize())
@@ -33,7 +33,7 @@ class LoadOpcode_Words_Tests {
 
   @Test
   fun `test LD HL, nn`() {
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x21.toByte(), 0x00.toByte(), 0x80.toByte()), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x21.toByte(), 0x00.toByte(), 0x80.toByte()))
     val loadOpcode = opcodes[0] as LoadOpcode
 
     Assertions.assertEquals(3, loadOpcode.toByteSize())

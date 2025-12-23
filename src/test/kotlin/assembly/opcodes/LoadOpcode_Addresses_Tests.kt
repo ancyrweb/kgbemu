@@ -9,8 +9,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class LoadOpcode_HLMemory_Tests {
-
+class LoadOpcode_Addresses_Tests {
   companion object {
     @JvmStatic
     fun loadFromHLTestData(): Stream<Arguments> = Stream.of(
@@ -38,7 +37,7 @@ class LoadOpcode_HLMemory_Tests {
   @Nested
   inner class LoadFromHLAddress {
     @ParameterizedTest(name = "LD {1}, (HL) (opcode 0x{0})")
-    @MethodSource("assembly.opcodes.LoadOpcode_HLMemory_Tests#loadFromHLTestData")
+    @MethodSource("assembly.opcodes.LoadOpcode_Addresses_Tests#loadFromHLTestData")
     fun `test load from HL address to register`(opcodeHex: String, destReg: String) {
       val opcodeByte = opcodeHex.toInt(16).toByte()
       val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte), startAddress = 0x0100)
@@ -55,7 +54,7 @@ class LoadOpcode_HLMemory_Tests {
   @Nested
   inner class LoadToHLAddress {
     @ParameterizedTest(name = "LD (HL), {1} (opcode 0x{0})")
-    @MethodSource("assembly.opcodes.LoadOpcode_HLMemory_Tests#loadToHLFromRegisterTestData")
+    @MethodSource("assembly.opcodes.LoadOpcode_Addresses_Tests#loadToHLFromRegisterTestData")
     fun `test load to HL address from register`(opcodeHex: String, sourceReg: String) {
       val opcodeByte = opcodeHex.toInt(16).toByte()
       val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte))

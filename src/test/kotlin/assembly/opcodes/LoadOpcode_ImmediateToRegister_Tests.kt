@@ -26,7 +26,7 @@ class LoadOpcode_ImmediateToRegister_Tests {
   fun `test immediate to register load`(opcodeHex: String, destReg: String, immediateValue: Int) {
     val opcodeByte = opcodeHex.toInt(16).toByte()
     val valueByte = immediateValue.toByte()
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte, valueByte), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte, valueByte))
 
     Assertions.assertEquals(1, opcodes.size)
     val opcode = opcodes[0]

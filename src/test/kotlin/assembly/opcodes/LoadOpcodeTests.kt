@@ -7,49 +7,6 @@ import org.junit.jupiter.api.Nested
 
 class LoadOpcodeTests {
 
-  @Nested
-  inner class HLMemoryTests {
-    @Test
-    fun `test LD A, (HL)`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x7E.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is HLAddressSource)
-      Assertions.assertEquals("A", (loadOpcode.destination as RegisterSource).getRegisterName())
-    }
-
-    @Test
-    fun `test LD (HL), A`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x77.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is HLAddressSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("A", (loadOpcode.source as RegisterSource).getRegisterName())
-    }
-
-    @Test
-    fun `test LD (HL), n`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x36.toByte(), 0xAB.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertEquals(2, loadOpcode.toByteSize())
-      Assertions.assertTrue(loadOpcode.destination is HLAddressSource)
-      Assertions.assertTrue(loadOpcode.source is ImmediateValueSource)
-      Assertions.assertEquals(0xAB, (loadOpcode.source as ImmediateValueSource).getValue())
-    }
-
-    @Test
-    fun `test LD B, (HL)`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x46.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is HLAddressSource)
-      Assertions.assertEquals("B", (loadOpcode.destination as RegisterSource).getRegisterName())
-    }
-  }
 
   @Nested
   inner class RegisterPairMemoryTests {

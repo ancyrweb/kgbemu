@@ -67,7 +67,7 @@ class LoadOpcode_RegisterToRegister_Tests {
   @MethodSource("assembly.opcodes.LoadOpcode_RegisterToRegister_Tests#registerToRegisterTestData")
   fun `test register to register load`(opcodeHex: String, destReg: String, sourceReg: String) {
     val opcodeByte = opcodeHex.toInt(16).toByte()
-    val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte), startAddress = 0x0100)
+    val opcodes = OpcodeTestUtils.scan(byteArrayOf(opcodeByte))
 
     Assertions.assertEquals(1, opcodes.size)
     val opcode = opcodes[0]

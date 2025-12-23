@@ -6,6 +6,8 @@ import fr.ancyrweb.gameboyemulator.assembly.opcodes.IllegalOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.JumpOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.NopOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.Opcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.PopOpcode
+import fr.ancyrweb.gameboyemulator.assembly.opcodes.PushOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.UnknownOpcode
 import fr.ancyrweb.gameboyemulator.assembly.opcodes.load.LoadOpcode
 
@@ -63,8 +65,11 @@ class OpcodeScanner(
       0xC3 -> JumpOpcode.fromBytes(bytes, index, address)
       0xCD -> CallOpcode.fromBytes(bytes, index, address)
       else -> {
-        // Try load opcodes
-        LoadOpcode.fromBytes(bytes, index, address)
+        // Try push/pop opcodes
+        PushOpcode.fromBytes(bytes, index, address)
+          ?: PopOpcode.fromBytes(bytes, index, address)
+          // Try load opcodes
+          ?: LoadOpcode.fromBytes(bytes, index, address)
           ?: UnknownOpcode.fromBytes(bytes, index, address)
       }
     }

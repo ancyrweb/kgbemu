@@ -9,7 +9,7 @@ class SPOffsetSource(private val offset: Int) : OperandSource() {
   override fun getName(): String {
     return if (offset >= 0) {
       "SP+${String.format("$%02X", offset and 0xFF)}"
-    } elssg "te {
+    } else {
       "SP-${String.format("$%02X", (-offset) and 0xFF)}"
     }
   }

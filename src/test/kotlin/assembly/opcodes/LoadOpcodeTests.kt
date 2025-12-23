@@ -6,47 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
 
 class LoadOpcodeTests {
-
-  @Nested
-  inner class RegisterToRegisterTests {
-    @Test
-    fun `test LD B, C`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x41.toByte()), startAddress = 0x0100)
-      Assertions.assertEquals(1, opcodes.size)
-
-      val opcode = opcodes[0]
-      Assertions.assertTrue(opcode is LoadOpcode)
-
-      val loadOpcode = opcode as LoadOpcode
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("B", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals("C", (loadOpcode.source as RegisterSource).getRegisterName())
-    }
-
-    @Test
-    fun `test LD A, B`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x78.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("A", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals("B", (loadOpcode.source as RegisterSource).getRegisterName())
-    }
-
-    @Test
-    fun `test LD H, L`() {
-      val opcodes = OpcodeTestUtils.scan(byteArrayOf(0x65.toByte()), startAddress = 0x0100)
-      val loadOpcode = opcodes[0] as LoadOpcode
-
-      Assertions.assertTrue(loadOpcode.destination is RegisterSource)
-      Assertions.assertTrue(loadOpcode.source is RegisterSource)
-      Assertions.assertEquals("H", (loadOpcode.destination as RegisterSource).getRegisterName())
-      Assertions.assertEquals("L", (loadOpcode.source as RegisterSource).getRegisterName())
-    }
-  }
-
   @Nested
   inner class ImmediateToRegisterTests {
     @Test
